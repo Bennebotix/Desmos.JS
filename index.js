@@ -35,7 +35,7 @@
       opts = fillDefaults(opts, defaults);
       if (!overridingData) {
         this.type = "expression";
-        this.id = Math.random() * 1000000000;
+        this.id = elementCounter;
         this.color = opts.c;
         this.latex = opts.l;
         opts.hasOwnProperty('ls') ? this.lineStyle = opts.ls : null;
