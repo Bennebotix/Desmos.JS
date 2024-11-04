@@ -8,7 +8,7 @@ class Calculator {
 
     var calcElmnt = document.createElement('div');
     document.body.appendChild(calcElmnt);
-    
+
     var calculator = Desmos.GraphingCalculator(calcElmnt, mode == 'e' ? editor : preview);
 
     if (eqs.length) {
@@ -19,7 +19,7 @@ class Calculator {
   }
 }
 
-new Plain_Yequals_Equation {
+class Plain_Yequals_Equation {
   construcctor(opts, overridingData = false) {
     var defaults = {
       c: defaultColors[defaultColorCounter++ % 4],
@@ -47,7 +47,7 @@ new Plain_Yequals_Equation {
 function fillDefaults(a, b) {
   var c = {};
   for (let key in b) {
-      c[key] = (a.hasOwnProperty(key) ? a : b)[key];
+    c[key] = (a.hasOwnProperty(key) ? a : b)[key];
   }
   for (let key in a) {
     !c.hasOwnProperty(key) ? c[key] = a[key] : null;
