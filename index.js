@@ -20,7 +20,7 @@
   }
 
   class Plain_Yequals_Equation {
-    construcctor(opts, overridingData = false) {
+    construcctor(opts = {}, overridingData = false) {
       var defaults = {
         c: defaultColors[defaultColorCounter++ % 4],
         l: 'y=x',
