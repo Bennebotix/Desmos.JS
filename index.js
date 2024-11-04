@@ -11,8 +11,14 @@
 
       var calculator = Desmos.GraphingCalculator(calcElmnt, mode == 'e' ? editor : preview);
 
+      this.json = { "version": 11, "randomSeed": "31f6cb0d39975c444562fec45e9618a9", "graph": { "viewport": { "xmin": -10, "ymin": -9.460227272727273, "xmax": 10, "ymax": 9.460227272727273 } }, "expressions": { "list": eqs }, "includeFunctionParametersInRandomSeed": true };
+
       if (eqs.length) {
-        calculator.setState({ "version": 11, "randomSeed": "31f6cb0d39975c444562fec45e9618a9", "graph": { "viewport": { "xmin": -10, "ymin": -9.460227272727273, "xmax": 10, "ymax": 9.460227272727273 } }, "expressions": { "list": eqs }, "includeFunctionParametersInRandomSeed": true });
+        calculator.setState(this.json);
+        (function(){
+          let newWin = open('', '_blank');
+          newWin.document.documentElement.innerHTML = '<pre>' + JSON.stringify(this.json, 2, 1)+'</pre>';
+        })();
       } else {
         calc.setBlank();
       }
