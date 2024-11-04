@@ -5,6 +5,6 @@ class Calculator {
 
     var calcElmnt = document.createElement('div');
     var calculator = Desmos.GraphingCalculator(calcElmnt, mode == 'e' ? editor : preview);
-    document.body.appendChild(caclElmnt);
+    document.body.appendChild(calcElmnt);
   }
 }
