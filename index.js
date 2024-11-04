@@ -1,4 +1,4 @@
-  var defaultColorCounter = 0;
+  var elementCounter = 0;
   var defaultColors = ['#c74440', '#388c46', '#6042a6', '#000000'];
 
   class Calculator {
@@ -28,7 +28,7 @@
   class Plain_Yequals_Equation {
     construcctor(opts = {}, overridingData = false) {
       var defaults = {
-        c: defaultColors[defaultColorCounter++ % 4],
+        c: defaultColors[elementCounter++ % 4],
         l: 'y=x',
         h: true
       };
