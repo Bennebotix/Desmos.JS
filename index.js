@@ -7,24 +7,39 @@ class Calculator {
     const editor = {actions: !0};
 
     var calcElmnt = document.createElement('div');
-    var calculator = Desmos.GraphingCalculator(calcElmnt, mode == 'e' ? editor : preview);
     document.body.appendChild(calcElmnt);
+    
+    var calculator = Desmos.GraphingCalculator(calcElmnt, mode == 'e' ? editor : preview);
+
+    if (eqs.length) {
+      calculator.setState({ "version": 11, "randomSeed": "31f6cb0d39975c444562fec45e9618a9", "graph": { "viewport": { "xmin": -10, "ymin": -9.460227272727273, "xmax": 10, "ymax": 9.460227272727273 } }, "expressions": { "list": eqs }, "includeFunctionParametersInRandomSeed": true });
+    } else {
+      calc.setBlankState();
+    }
   }
 }
 
-new PlainEquation {
-  construcctor(opts) {
+new Plain_Yequals_Equation {
+  construcctor(opts, overridingData = false) {
     var defaults = {
       c: defaultColors[defaultColorCounter++ % 4],
-      l: 'y=x'
+      l: 'y=x',
+      h: true
     };
     opts = fillDefaults(opts, defaults);
-    this.type = "expression";
-    this.id = Math.random() * 1000000000;
-    this.color = opts.c;
-    this.latex = opts.l;
-    opts.hasOwnProperty('ls') ? this.lineStyle = opts.ls: null;
-    
+    if (!overridingData) {
+      this.type = "expression";
+      this.id = Math.random() * 1000000000;
+      this.color = opts.c;
+      this.latex = opts.l;
+      opts.hasOwnProperty('ls') ? this.lineStyle = opts.ls : null;
+      opts.hasOwnProperty('lw') ? this.lineWidth = opts.lw : null;
+      opts.hasOwnProperty('lo') ? this.lineOpacity = opts.lo : null;
+      opts.hasOwnProperty('ld') ? this.description = opts.ld : null;
+      opts.hasOwnProperty('lci') ? this.clickableInfo = filDefaults(opts.lci, { "enabled": true }) : null;
+    } else {
+      this = fillDefaults(this, overridingData);
+    }
   }
 }
 
