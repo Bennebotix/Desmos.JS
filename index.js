@@ -14,7 +14,7 @@ class Calculator {
     if (eqs.length) {
       calculator.setState({ "version": 11, "randomSeed": "31f6cb0d39975c444562fec45e9618a9", "graph": { "viewport": { "xmin": -10, "ymin": -9.460227272727273, "xmax": 10, "ymax": 9.460227272727273 } }, "expressions": { "list": eqs }, "includeFunctionParametersInRandomSeed": true });
     } else {
-      calc.setBlankState();
+      calc.setBlank();
     }
   }
 }
