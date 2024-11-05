@@ -2,6 +2,7 @@ var elementCounter = 0;
 var tableCounter = 0;
 var defaultColorCounter = 0;
 var defaultColors = ['#c74440', '#2d70b3', '#388c46', '#6042a6', '#000000'];
+var varibleOrder = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 
 class Calculator {
   constructor(eqs = [], mode = 'e') {
@@ -155,10 +156,10 @@ class Table {
     return me;
   }
 
-  column(opts) {
+  column(opts, i) {
     opts = fillDefaults(opts, {
-      c: 
-      l: ''
+      c: i !== 1 ? defaultColors[defaultColorCounter++ % 4] : undefined,
+      l: 
     });
   }
 values	Array of LaTeX strings, optional. Need not be specified in the case of computed table columns.
