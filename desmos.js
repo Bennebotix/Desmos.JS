@@ -198,13 +198,12 @@ function fillDefaults(a, b) {
   return c;
 }
 
-const Calculator = new Class(ClaculatorClass);
+const Calculator = new Class(CalculatorClass);
 const PlainEQ = new Class(PlainEQClass);
 const Variable = new Class(VariableClass);
 const Table = new Class(TableClass);
 const Column = new Class(ColumnClass);
-const No = new Class(JSONStateCrafter);
-const Yes = new Class(JSONStateCrafter);
+
 const UID = (l) => [...Array(l)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
 
 function loopingVaribaleNames(num) {
