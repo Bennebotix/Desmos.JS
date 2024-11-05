@@ -24,7 +24,7 @@
 
   class Plain_Yequals_Equation {
     constructor(opts = {}, overridingData = false) {
-      var me = [];
+      var me = {};
       
       var defaults = {
         c: defaultColors[elementCounter++ % 4],
