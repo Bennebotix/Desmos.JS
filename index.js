@@ -23,7 +23,7 @@
     }
   }
 
-  class Plain_Yequals_Equation {
+  class PlainEQ {
     constructor(opts = {}, overridingData = false) {
       var me = {};
       
