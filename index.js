@@ -15,10 +15,7 @@
 
       if (eqs.length) {
         calculator.setState(this.json);
-        (function(){
-          let newWin = open('', '_blank');
-          newWin.document.documentElement.innerHTML = '<pre>' + JSON.stringify(this.json, 2, 1)+'</pre>';
-        })();
+        alert(JSON.stringify(this.json);
       } else {
         calc.setBlank();
       }
