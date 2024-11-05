@@ -128,7 +128,6 @@ class Table {
     var me = {};
     
     var defaults = {
-      l: 'y=x',
       c: [
         this.column({ n: 'x_{' + ++tableCounter + '}' }),
         this.column({ n: 'y_{' + ++tableCounter + '}' })
