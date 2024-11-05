@@ -45,6 +45,7 @@
           this[key] = overridingData[key];
         }
       }
+      return this;
     }
   }
 
