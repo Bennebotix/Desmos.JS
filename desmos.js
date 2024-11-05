@@ -4,7 +4,9 @@ var defaultColorCounter = 0;
 var defaultColors = ['#c74440', '#2d70b3', '#388c46', '#6042a6', '#000000'];
 var varibleOrder = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 
-class Calculator {
+class Class{constructor(classIn){return(...a)=>new classIn(...a)}}
+
+class CalculatorClass {
   constructor(eqs = [], mode = 'e') {
     elementCounter = 0;
 
@@ -48,7 +50,7 @@ class JSONStateCrafter {
   }
 }
 
-class PlainEQ {
+class PlainEQClass {
   constructor(opts = {}, overridingData = false) {
     var me = {};
 
@@ -81,7 +83,7 @@ class PlainEQ {
   }
 }
 
-class Variable {
+class VariableClass {
   constructor(opts = {}, overridingData = false) {
     if (opts.hasOwnProperty('n'))
       var me = {};
@@ -124,14 +126,14 @@ class Variable {
   }
 }
 
-class Table {
+class TableClass {
   constructor(opts = {}, overridingData = false) {
     var me = {};
 
     var defaults = {
       c: [
-        new Column({ n: 'x_{' + tableCounter + '}' }),
-        new Column({ n: 'y_{' + tableCounter + '}' })
+        new ColumnClass({ n: 'x_{' + tableCounter + '}' }),
+        new ColumnClass({ n: 'y_{' + tableCounter + '}' })
       ]
     };
     opts = fillDefaults(opts, defaults);
@@ -169,7 +171,7 @@ class Table {
   }
 }
 
-class Column {
+class ColumnClass {
   constructor(opts = {}) {
     this.opts = opts;
   }
@@ -194,6 +196,12 @@ function fillDefaults(a, b) {
   }
   return c;
 }
+
+const Calculator = new Class(ClaculatorClass);
+const PlainEQ = new Class(PlainEQClass);
+const Variable = new Class(VariableClass);
+const Table = new Class(TableClass);
+const Column = new Class(ColumnClass);
 
 const UID = (l) => [...Array(l)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
 
