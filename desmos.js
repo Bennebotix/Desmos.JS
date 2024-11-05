@@ -204,7 +204,7 @@ const Variable = new Class(VariableClass);
 const Table = new Class(TableClass);
 const Column = new Class(ColumnClass);
 const No = new Class(JSONStateCrafter);
-const YES = new Class(JSONStateCrafter);
+const Yes = new Class(JSONStateCrafter);
 const UID = (l) => [...Array(l)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
 
 function loopingVaribaleNames(num) {
