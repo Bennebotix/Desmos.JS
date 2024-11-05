@@ -143,8 +143,7 @@ class Table {
       me.columns = [];
 
       for (var i = 0; i < opts.c.length; i++) {
-        var columnOld = opts.c[i];
-        columnOld.set(i);
+        var columnOld = opts.c[i].set(i);
         var columnNew = {};
         columnNew.latex = columnOld.l;
         columnNew.color = columnOld.c;
