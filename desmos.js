@@ -179,7 +179,7 @@ class Column {
       c: defaultColors[i !== 1 ? defaultColorCounter++ % 4 : defaultColorCounter % 4],
       l: name.val + '_{' + name.excess + tableCounter + '}',
       h: i == 1 ? true : undefined,
-      v: !this.opts.hasOwnProperty('l') ? [''] : undefined
+      v: !this.opts.hasOwnProperty('l') ? undefined : undefined
     });
   }
 }
