@@ -169,7 +169,7 @@ class Table {
   }
 }
 class Column {
-  constructor(opts) {
+  constructor(opts = {]) {
     this.opts = opts;
   }
   set(i) {
