@@ -129,8 +129,8 @@ class Table {
     
     var defaults = {
       c: [
-        this.column({ n: 'x_{' + ++tableCounter + '}' }),
-        this.column({ n: 'y_{' + ++tableCounter + '}' })
+        this.column({ n: 'x_{' + ++tableCounter + '}' }, 1),
+        this.column({ n: 'y_{' + ++tableCounter + '}' }, 2)
       ]
     };
     opts = fillDefaults(opts, defaults);
@@ -166,8 +166,9 @@ class Table {
     
     return me;
   }
-
-  column(opts, i) {
+}
+class Column {
+  constructor(opts, i) {
     var name = loopingVaribaleNames(i);
     opts = fillDefaults(opts, {
       c: defaultColors[i !== 1 ? defaultColorCounter++ % 4 : defaultColorCounter % 4],
