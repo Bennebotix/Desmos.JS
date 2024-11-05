@@ -23,7 +23,7 @@
   }
 
   class Plain_Yequals_Equation {
-    construcctor(opts = {}, overridingData = false) {
+    constructor(opts = {}, overridingData = false) {
       var me = [];
       
       var defaults = {
