@@ -15,7 +15,7 @@
 
       if (eqs.length) {
         calculator.setState(this.json);
-        alert(JSON.stringify(this.json);
+        alert(JSON.stringify(this.json, null, 2));
       } else {
         calc.setBlank();
       }
