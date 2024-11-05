@@ -137,18 +137,30 @@ class Table {
     opts = fillDefaults(opts, defaults);
     
     if (!overridingData) {
-      me.type = "expression";
+      me.type = "table";
       me.id = ++elementCounter;
-      me.latex = opts.l;
 
-      for 
-        me.color = opts.c;
-        opts.hasOwnProperty('h') ? me.hidden = opts.h : null;
-        opts.hasOwnProperty('ls') ? me.lineStyle = opts.ls : null;
-        opts.hasOwnProperty('lw') ? me.lineWidth = opts.lw : null;
-        opts.hasOwnProperty('lo') ? me.lineOpacity = opts.lo : null;
-        opts.hasOwnProperty('ld') ? me.description = opts.ld : null;
-        opts.hasOwnProperty('lci') ? me.clickableInfo = fillDefaults(opts.lci, { "enabled": true }) : null;
+      me.columns = [];
+
+      for (var i = 0; i < opts.c.length; i++) {
+        var columnOld = opts.c[i];
+        var columnNew = {};
+        columnNew.latex = columnOld.l;
+        columnNew.color = columnOld.c;
+        columnOld.hasOwnProperty('h') ? columnNew.hidden = columnOld.h : null;
+        columnOld.hasOwnProperty('ls') ? columnNew.lineStyle = columnOld.ls : null;
+        columnOld.hasOwnProperty('lw') ? columnNew.lineWidth = columnOld.lw : null;
+        columnOld.hasOwnProperty('lo') ? columnNew.lineOpacity = columnOld.lo : null;
+        columnOld.hasOwnProperty('hp') ? columnNew.points = columnOld.hp : null;
+        columnOld.hasOwnProperty('hl') ? columnNew.lines = columnOld.hl : null;
+        columnOld.hasOwnProperty('ps') ? columnNew.pointStyle = columnOld.ps : null;
+        columnOld.hasOwnProperty('pS') ? columnNew.pointSize = columnOld.pS : null;
+        columnOld.hasOwnProperty('po') ? columnNew.pointOpacity = columnOld.po : null;
+        columnOld.hasOwnProperty('dm') ? columnNew.dragMode = columnOld.dm : null;
+        columnOld.hasOwnProperty('v') ? columnNew.values = columnOld.v : null;
+        
+        me.columns.push(columnNew);
+      }
     } else {
       me = overridingData;
     }
@@ -157,23 +169,13 @@ class Table {
   }
 
   column(opts, i) {
+    var name = loopingVaribaleNames(i);
     opts = fillDefaults(opts, {
-      c: i !== 1 ? defaultColors[defaultColorCounter++ % 4] : undefined,
-      l: 
+      c: defaultColors[i !== 1 ? defaultColorCounter++ % 4 : defaultColorCounter % 4],
+      l: name.val + '_{' + name.excess + '}',
+      h: i == 1 ? true : undefined
     });
   }
-values	Array of LaTeX strings, optional. Need not be specified in the case of computed table columns.
-color	String hex color, optional. See Colors. Default will cycle through 6 default colors.
-hidden	Boolean, optional. Determines if graph is drawn. Defaults to false.
-points	Boolean, optional. Determines whether points are plotted.
-lines	Boolean, optional. Determines whether line segments are plotted.
-lineStyle	Enum value, optional. Sets the drawing style for line segments. See Styles.
-lineWidth	Number or String, optional. Determines width of lines in pixels. May be any positive number, or a LaTeX string that evaluates to a positive number. Defaults to 2.5.
-lineOpacity	Number or String, optional. Determines opacity of lines. May be a number between 0 and 1, or a LaTeX string that evaluates to a number between 0 and 1. Defaults to 0.9.
-pointStyle	Enum value, optional. Sets the drawing style for points. See Styles.
-pointSize	Number or String, optional. Determines diameter of points in pixels. May be any positive number, or a LaTeX string that evaluates to a positive number. Defaults to 9.
-pointOpacity	Number or String, optional. Determines opacity of points. May be a number between 0 and 1, or a LaTeX string that evaluates to a number between 0 and 1. Defaults to 0.9.
-dragMode	Enum value, optional. See Drag Modes. Defaults to DragModes.NONE.
 }
 
 function fillDefaults(a, b) {
@@ -186,4 +188,35 @@ function fillDefaults(a, b) {
   }
   return c;
 }
+
 const UID = (l) => [...Array(l)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
+
+function loopingVaribaleNames(num) {
+    const characters = [
+        'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
+        'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
+        'u', 'v', 'w', 'x', 'y', 'z',
+        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
+        'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
+        'U', 'V', 'W', 'X', 'Y', 'Z'
+    ];
+
+    // There are 52 characters in total (26 lowercase + 26 uppercase)
+    const totalCharacters = characters.length;
+    
+    // Calculate index and excess characters
+    let index = num - 1; // Adjusting for zero-based index
+    let excess = [];
+
+    // Find the 'val'
+    let characterIndex = index % totalCharacters;
+    let val = characters[characterIndex];
+    
+    // Calculate excess characters (numbers of full cycles through 52)
+    let fullCycles = Math.floor(index / totalCharacters);
+    for (let i = 0; i < fullCycles; i++) {
+        excess.push(val); // Store the current value for each full cycle
+    }
+
+    return { val: val, excess: excess.join('') };
+}
