@@ -14,7 +14,7 @@
       this.json = { "version": 11, "randomSeed": "31f6cb0d39975c444562fec45e9618a9", "graph": { "viewport": { "xmin": -10, "ymin": -9.460227272727273, "xmax": 10, "ymax": 9.460227272727273 } }, "expressions": { "list": eqs }, "includeFunctionParametersInRandomSeed": true };
 
       if (eqs.length) {
-        calculator.setState(this.json);
+        //calculator.setState(this.json);
         alert(JSON.stringify(this.json, null, 2));
       } else {
         calc.setBlank();
