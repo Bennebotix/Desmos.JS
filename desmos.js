@@ -20,7 +20,7 @@ class Calculator {
 
     if (eqs.length) {
       calculator.setState(this.json);
-      //alert(JSON.stringify(this.json, 1, 2));
+      alert(JSON.stringify(this.json, 1, 2));
     } else {
       calc.setBlank();
     }
