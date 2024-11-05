@@ -105,7 +105,7 @@ class Variable {
 
     if (opts.hasOwnProperty('min')) {
       slider.min = opts.min;
-      slider.hardMin = true;
+      slider.hardMin = false;
     }
     
     if (opts.hasOwnProperty('max')) {
