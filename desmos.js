@@ -85,8 +85,9 @@ class PlainEQClass {
 
 class VariableClass {
   constructor(opts = {}, overridingData = false) {
-    if (opts.hasOwnProperty('n'))
-      var me = {};
+    if (!opts.hasOwnProperty('n')) {
+    }
+    var me = {};
 
     var defaults = {
       v: 0
