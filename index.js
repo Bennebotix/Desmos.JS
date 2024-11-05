@@ -24,6 +24,8 @@
 
   class Plain_Yequals_Equation {
     construcctor(opts = {}, overridingData = false) {
+      var me = [];
+      
       var defaults = {
         c: defaultColors[elementCounter++ % 4],
         l: 'y=x',
@@ -31,21 +33,19 @@
       };
       opts = fillDefaults(opts, defaults);
       if (!overridingData) {
-        this.type = "expression";
-        this.id = elementCounter;
-        this.color = opts.c;
-        this.latex = opts.l;
-        opts.hasOwnProperty('ls') ? this.lineStyle = opts.ls : null;
-        opts.hasOwnProperty('lw') ? this.lineWidth = opts.lw : null;
-        opts.hasOwnProperty('lo') ? this.lineOpacity = opts.lo : null;
-        opts.hasOwnProperty('ld') ? this.description = opts.ld : null;
-        opts.hasOwnProperty('lci') ? this.clickableInfo = filDefaults(opts.lci, { "enabled": true }) : null;
+        me.type = "expression";
+        me.id = elementCounter;
+        me.color = opts.c;
+        me.latex = opts.l;
+        opts.hasOwnProperty('ls') ? me.lineStyle = opts.ls : null;
+        opts.hasOwnProperty('lw') ? me.lineWidth = opts.lw : null;
+        opts.hasOwnProperty('lo') ? me.lineOpacity = opts.lo : null;
+        opts.hasOwnProperty('ld') ? me.description = opts.ld : null;
+        opts.hasOwnProperty('lci') ? me.clickableInfo = filDefaults(opts.lci, { "enabled": true }) : null;
       } else {
-        for (let key in overridingData) {
-          this[key] = overridingData[key];
-        }
+        me = overridingData;
       }
-      return this;
+      return me;
     }
   }
 
