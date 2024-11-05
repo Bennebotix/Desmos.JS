@@ -1,4 +1,5 @@
 var elementCounter = 0;
+var tableCounter = 0;
 var defaultColorCounter = 0;
 var defaultColors = ['#c74440', '#2d70b3', '#388c46', '#6042a6', '#000000'];
 
@@ -50,7 +51,7 @@ class PlainEQ {
     var me = {};
     
     var defaults = {
-      c: defaultColors[defaultColorCounter++ % 4],
+      c: opts.grahpedEQ !== false ? defaultColors[defaultColorCounter++ % 4] : undefined,
       l: 'y=x',
       graphedEQ: true
     };
@@ -68,7 +69,7 @@ class PlainEQ {
         opts.hasOwnProperty('lw') ? me.lineWidth = opts.lw : null;
         opts.hasOwnProperty('lo') ? me.lineOpacity = opts.lo : null;
         opts.hasOwnProperty('ld') ? me.description = opts.ld : null;
-        opts.hasOwnProperty('lci') ? me.clickableInfo = filDefaults(opts.lci, { "enabled": true }) : null;
+        opts.hasOwnProperty('lci') ? me.clickableInfo = fillDefaults(opts.lci, { "enabled": true }) : null;
       }
     } else {
       me = overridingData;
@@ -119,6 +120,59 @@ class Variable {
     
     return slider;
   }
+}
+
+class Table {
+  constructor(opts = {}, overridingData = false) {
+    var me = {};
+    
+    var defaults = {
+      l: 'y=x',
+      c: [
+        this.column({ n: 'x_{' + ++tableCounter + '}' }),
+        this.column({ n: 'y_{' + ++tableCounter + '}' })
+      ]
+    };
+    opts = fillDefaults(opts, defaults);
+    
+    if (!overridingData) {
+      me.type = "expression";
+      me.id = ++elementCounter;
+      me.latex = opts.l;
+
+      for 
+        me.color = opts.c;
+        opts.hasOwnProperty('h') ? me.hidden = opts.h : null;
+        opts.hasOwnProperty('ls') ? me.lineStyle = opts.ls : null;
+        opts.hasOwnProperty('lw') ? me.lineWidth = opts.lw : null;
+        opts.hasOwnProperty('lo') ? me.lineOpacity = opts.lo : null;
+        opts.hasOwnProperty('ld') ? me.description = opts.ld : null;
+        opts.hasOwnProperty('lci') ? me.clickableInfo = fillDefaults(opts.lci, { "enabled": true }) : null;
+    } else {
+      me = overridingData;
+    }
+    
+    return me;
+  }
+
+  column(opts) {
+    opts = fillDefaults(opts, {
+      c: 
+      l: ''
+    });
+  }
+values	Array of LaTeX strings, optional. Need not be specified in the case of computed table columns.
+color	String hex color, optional. See Colors. Default will cycle through 6 default colors.
+hidden	Boolean, optional. Determines if graph is drawn. Defaults to false.
+points	Boolean, optional. Determines whether points are plotted.
+lines	Boolean, optional. Determines whether line segments are plotted.
+lineStyle	Enum value, optional. Sets the drawing style for line segments. See Styles.
+lineWidth	Number or String, optional. Determines width of lines in pixels. May be any positive number, or a LaTeX string that evaluates to a positive number. Defaults to 2.5.
+lineOpacity	Number or String, optional. Determines opacity of lines. May be a number between 0 and 1, or a LaTeX string that evaluates to a number between 0 and 1. Defaults to 0.9.
+pointStyle	Enum value, optional. Sets the drawing style for points. See Styles.
+pointSize	Number or String, optional. Determines diameter of points in pixels. May be any positive number, or a LaTeX string that evaluates to a positive number. Defaults to 9.
+pointOpacity	Number or String, optional. Determines opacity of points. May be a number between 0 and 1, or a LaTeX string that evaluates to a number between 0 and 1. Defaults to 0.9.
+dragMode	Enum value, optional. See Drag Modes. Defaults to DragModes.NONE.
 }
 
 function fillDefaults(a, b) {
