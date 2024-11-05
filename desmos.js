@@ -203,7 +203,7 @@ const PlainEQ = new Class(PlainEQClass);
 const Variable = new Class(VariableClass);
 const Table = new Class(TableClass);
 const Column = new Class(ColumnClass);
-
+const YES = 1;
 const UID = (l) => [...Array(l)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
 
 function loopingVaribaleNames(num) {
