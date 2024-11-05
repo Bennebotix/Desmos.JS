@@ -14,12 +14,33 @@ class Calculator {
 
     var calculator = Desmos.GraphingCalculator(calcElmnt, mode == 'e' ? editor : preview);
 
-    this.json = { "version": 11, "randomSeed": "31f6cb0d39975c444562fec45e9618a9", "graph": { "viewport": { "xmin": -10, "ymin": -9.460227272727273, "xmax": 10, "ymax": 9.460227272727273 } }, "expressions": { "list": eqs }, "includeFunctionParametersInRandomSeed": true };
+    this.json = new JSONStateCrafter(eqs);
 
     if (eqs.length) {
       calculator.setState(this.json);
     } else {
       calc.setBlank();
+    }
+  }
+}
+
+class JSONStateCrafter {
+  constructor(eqs) {
+    return {
+      "version": 11,
+      "randomSeed": UID(32),
+      "graph": {
+        "viewport": {
+          "xmin": -10,
+          "ymin": -9.460227272727273,
+          "xmax": 10,
+          "ymax": 9.460227272727273
+        }
+      },
+      "expressions": {
+        "list": eqs
+      },
+      "includeFunctionParametersInRandomSeed": true
     }
   }
 }
@@ -31,7 +52,6 @@ class PlainEQ {
     var defaults = {
       c: defaultColors[defaultColorCounter++ % 4],
       l: 'y=x',
-      h: true,
       graphedEQ: true
     };
     opts = fillDefaults(opts, defaults);
@@ -72,12 +92,32 @@ class Variable {
       me.type = "expression";
       me.id = ++elementCounter;
       me.latex = opts.n + '=' + opts.v;
-      opts.hasOwnProperty('sb') ? me.sliderBounds = fillDefaults(opts.sb, { min: '', max: '', step: '' }) : null;
+      opts.hasOwnProperty('sb') ? me.slider = this.fillSlider(opts.sb) : null;
     } else {
       me = overridingData;
     }
     
     return me;
+  }
+
+  fillSlider(opts) {
+    var slider = {};
+
+    if (opts.hasOwnProperty('min')) {
+      slider.min = opts.min;
+      slider.hardMin = true;
+    }
+    
+    if (opts.hasOwnProperty('max')) {
+      slider.max = opts.max;
+      slider.hardMax = true;
+    }
+
+    if (opts.hasOwnProperty('step')) {
+      slider.step = opts.step;
+    }
+    
+    return slider;
   }
 }
 
@@ -91,3 +131,4 @@ function fillDefaults(a, b) {
   }
   return c;
 }
+const UID = (l) => [...Array(l)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
