@@ -1,8 +1,10 @@
   var elementCounter = 0;
-  var defaultColors = ['#c74440', '#388c46', '#6042a6', '#000000'];
+  var defaultColors = ['#c74440', '#2d70b3', '#388c46', '#6042a6', '#000000'];
 
   class Calculator {
     constructor(eqs = [], mode = 'e') {
+      elementCounter = 0;
+      
       const preview = {actions: !0, expressions: !1, settingsMenu: !1};
       const editor = {actions: !0};
 
@@ -26,14 +28,14 @@
       var me = {};
       
       var defaults = {
-        c: defaultColors[elementCounter++ % 4],
+        c: defaultColors[elementCounter % 4],
         l: 'y=x',
         h: true
       };
       opts = fillDefaults(opts, defaults);
       if (!overridingData) {
         me.type = "expression";
-        me.id = elementCounter;
+        me.id = elementCounter + 1;
         me.color = opts.c;
         me.latex = opts.l;
         opts.hasOwnProperty('ls') ? me.lineStyle = opts.ls : null;
@@ -44,6 +46,9 @@
       } else {
         me = overridingData;
       }
+      
+      elementCounter++;
+      
       return me;
     }
   }
