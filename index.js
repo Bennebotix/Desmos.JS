@@ -24,7 +24,7 @@
   }
 
   class PlainEQ {
-    constructor(opts = {}, overridingData = false) {
+    constructor(opts = {}, eq = true, overridingData = false) {
       var me = {};
       
       var defaults = {
@@ -36,13 +36,17 @@
       if (!overridingData) {
         me.type = "expression";
         me.id = elementCounter + 1;
-        me.color = opts.c;
         me.latex = opts.l;
-        opts.hasOwnProperty('ls') ? me.lineStyle = opts.ls : null;
-        opts.hasOwnProperty('lw') ? me.lineWidth = opts.lw : null;
-        opts.hasOwnProperty('lo') ? me.lineOpacity = opts.lo : null;
-        opts.hasOwnProperty('ld') ? me.description = opts.ld : null;
-        opts.hasOwnProperty('lci') ? me.clickableInfo = filDefaults(opts.lci, { "enabled": true }) : null;
+
+        if (eq) {
+          me.color = opts.c;
+          opts.hasOwnProperty('h') ? me.hidden = opts.h : null;
+          opts.hasOwnProperty('ls') ? me.lineStyle = opts.ls : null;
+          opts.hasOwnProperty('lw') ? me.lineWidth = opts.lw : null;
+          opts.hasOwnProperty('lo') ? me.lineOpacity = opts.lo : null;
+          opts.hasOwnProperty('ld') ? me.description = opts.ld : null;
+          opts.hasOwnProperty('lci') ? me.clickableInfo = filDefaults(opts.lci, { "enabled": true }) : null;
+        }
       } else {
         me = overridingData;
       }
