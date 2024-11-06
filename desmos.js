@@ -200,13 +200,19 @@ class VariableClass {
   fillSlider(opts) {
     var slider = {};
 
-    slider.min = opts.min;
-    slider.hardMin = opts.hasOwnProperty('min')?!0:undefined;
+    if (opts.hasOwnProperty('min')) {
+      slider.min = opts.min;
+      slider.hardMin = true;
+    }
 
-    slider.max = opts.max;
-    slider.hardMax = opts.hasOwnProperty('max')?!0:undefined;
+    if (opts.hasOwnProperty('max')) {
+      slider.max = opts.max;
+      slider.hardMax = true;
+    }
 
-    slider.step = opts.step;
+    if (opts.hasOwnProperty('step')) {
+      slider.step = opts.step;
+    }
 
     return slider;
   }
@@ -276,10 +282,10 @@ class ColumnClass {
 
 function fillDefaults(a, b) {
   var c = {};
-  for (let key in b) {
+  for (let key of Object.keys(b)) {
     c[key] = (a.hasOwnProperty(key) ? a : b)[key];
   }
-  for (let key in a) {
+  for (let key of Object.keys(a)) {
     !c.hasOwnProperty(key) ? c[key] = a[key] : null;
   }
   return c;
