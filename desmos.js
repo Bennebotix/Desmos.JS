@@ -105,7 +105,13 @@ class PlainEQClass {
   }
 
   desify() {
-    return select(this, this.features.concat(this.featuresShort), v=>v);
+    return select(this, this.features.concat(this.featuresShort), v => {
+      if (typeof v == 'number' || typeof v == 'boolean') {
+        return JSON.stringify(v);
+      } else {
+        return v
+      }
+    });
   }
 
   initFeature(sn, longName, customReturn = false) {
@@ -166,7 +172,13 @@ class VariableClass {
   }
 
   desify() {
-    return select(this, this.features.concat(this.featuresShort), v=>typeof v=='number'?v.toString():v);
+    return select(this, this.features.concat(this.featuresShort), v => {
+      if (typeof v == 'number' || typeof v == 'boolean') {
+        return JSON.stringify(v);
+      } else {
+        return v
+      }
+    });
   }
 
   initFeature(sn, longName, customReturn = false) {
