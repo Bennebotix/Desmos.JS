@@ -25,7 +25,7 @@ class CalculatorClass {
       alert(JSON.stringify(this.json, 1, 2));
       calculator.setState(this.json);
     } else {
-      calc.setBlank();
+      calculator.setBlank();
     }
   }
 }
