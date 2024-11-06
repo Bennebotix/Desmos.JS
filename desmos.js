@@ -21,8 +21,8 @@ class CalculatorClass {
     this.json = new JSONStateCrafter(eqs);
 
     if (eqs.length) {
-      //calculator.setState(this.json);
-      alert(JSON.stringify(this.json, 1, 2));
+      calculator.setState(this.json);
+      //alert(JSON.stringify(this.json, 1, 2));
     } else {
       calc.setBlank();
     }
