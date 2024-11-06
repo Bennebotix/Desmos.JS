@@ -124,19 +124,40 @@ class PlainEQClass {
 }
 
 class VariableClass {
-  constructor(opts = {}, overridingData = false) {
-    if (!opts.hasOwnProperty('n')) {
-    }
-    var me = {};
+  constructor(overridingData = false) {
+    this.features = ['type',
+                     'id',
+                     'latex',
+                     'slider'];
+    this.featuresLong = ['latex',
+                         'slider'];
+    this.featuresShort = ['l', 'sb'];
 
-    var defaults = {
-      v: 0
+    for (let i = 0; i < this.featuresLong.length; i++) {
+      if (typeof this.featuresLong[i] == 'object') {
+        this.initFeature(this.featuresShort[i], this.featuresLong[i][0], this.featuresLong[i][1]);
+      } else {
+        this.initFeature(this.featuresShort[i], this.featuresLong[i]);
+      }
+    }
+
+    this.defaults = {
+      color: defaultColors[defaultColorCounter++ % 4],
+      latex: 'y=x'
     };
-    opts = fillDefaults(opts, defaults);
 
     if (!overridingData) {
-      me.type = "expression";
-      me.id = ++elementCounter;
+      this.type = "expression";
+      this.id = ++elementCounter;
+    } else {
+      for (let key in overridingData) {
+        this[key] = overridingData[key];
+      }
+    }
+
+    this.applyDefaults();
+    return this.desify();
+    
       me.latex = opts.n + '=' + opts.v;
       opts.hasOwnProperty('sb') ? me.slider = this.fillSlider(opts.sb) : null;
     } else {
