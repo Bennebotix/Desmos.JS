@@ -21,8 +21,8 @@ class CalculatorClass {
     this.json = new JSONStateCrafter(eqs);
 
     if (eqs.length) {
-      calculator.setState(this.json);
       //alert(JSON.stringify(this.json, 1, 2));
+      calculator.setState(this.json);
     } else {
       calc.setBlank();
     }
@@ -51,35 +51,71 @@ class JSONStateCrafter {
 }
 
 class PlainEQClass {
-  constructor(opts = {}, overridingData = false) {
-    var me = {};
+  constructor(overridingData = false) {
+    this.features = ['type',
+                     'id',
+                     'latex',
+                     'color',
+                     'hidden',
+                     'lineStyle',
+                     'lineWidth',
+                     'lineOpacity',
+                     'description',
+                     'clickableInfo'];
+    this.featuresLong = ['latex',
+                         'color',
+                         'hidden',
+                         'lineStyle',
+                         'lineWidth',
+                         'lineOpacity',
+                         ['description', v => {
+                           this.clickableInfo = fillDefaults(this.clickableInfo, { "enabled": true });
+                           return v;
+                         }],
+                         ['clickableInfo', v =>
+                           fillDefaults(v, { "enabled": true })
+                         ]];
+    this.featuresShort = ['l', 'c', 'h', 'ls', 'lw', 'lo', 'd', 'ci'];
 
-    var defaults = {
-      c: opts.grahpedEQ !== false ? defaultColors[defaultColorCounter++ % 4] : undefined,
-      l: 'y=x',
-      graphedEQ: true
-    };
-    opts = fillDefaults(opts, defaults);
-
-    if (!overridingData) {
-      me.type = "expression";
-      me.id = ++elementCounter;
-      me.latex = opts.l;
-
-      if (opts.graphedEQ) {
-        me.color = opts.c;
-        opts.hasOwnProperty('h') ? me.hidden = opts.h : null;
-        opts.hasOwnProperty('ls') ? me.lineStyle = opts.ls : null;
-        opts.hasOwnProperty('lw') ? me.lineWidth = opts.lw : null;
-        opts.hasOwnProperty('lo') ? me.lineOpacity = opts.lo : null;
-        opts.hasOwnProperty('ld') ? me.description = opts.ld : null;
-        opts.hasOwnProperty('lci') ? me.clickableInfo = fillDefaults(opts.lci, { "enabled": true }) : null;
+    for (let i = 0; i < this.featuresLong.length; i++) {
+      if (typeof this.featuresLong[i] == 'object') {
+        this.initFeature(this.featuresShort[i], this.featuresLong[i][0], this.featuresLong[i][1]);
+      } else {
+        this.initFeature(this.featuresShort[i], this.featuresLong[i]);
       }
-    } else {
-      me = overridingData;
     }
 
-    return me;
+    this.defaults = {
+      color: opts.grahpedEQ !== false ? defaultColors[defaultColorCounter++ % 4] : undefined,
+      latex: 'y=x'
+    };
+
+    if (!overridingData) {
+      this.type = "expression";
+      this.id = ++elementCounter;
+    } else {
+      for (let key in overridingData) {
+        this[key] = overridingData[key];
+      }
+    }
+
+    applyDefaults();
+    return select(this, this.features);
+  }
+
+  initFeature(sn, longName, cutomReturn = false) {
+    this[sn] = (v) => {
+      this[longName] = cutomReturn ? customReturn(v) : v;
+      applyDefaults();
+      return select(this, this.features);
+    }
+  }
+
+  applyDefaults() {
+    var data = fillDefaults(this, this.defaults);
+    for (let key in data) {
+      this[key] = data[key];
+    }
   }
 }
 
@@ -194,6 +230,14 @@ function fillDefaults(a, b) {
   }
   for (let key in a) {
     !c.hasOwnProperty(key) ? c[key] = a[key] : null;
+  }
+  return c;
+}
+
+function select(a, b) {
+  var c = {};
+  for (let key of b) {
+    c[key] = a[key];
   }
   return c;
 }
