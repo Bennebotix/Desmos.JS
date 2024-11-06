@@ -129,9 +129,12 @@ class VariableClass {
                      'id',
                      'latex',
                      'slider'];
-    this.featuresLong = ['latex',
-                         'slider'];
-    this.featuresShort = ['l', 'sb'];
+    this.featuresLong = ['name',
+                         'value'
+                         ['slider', v =>
+                           this.fillSlider(v)
+                         ]];
+    this.featuresShort = ['n', 'v', 's'];
 
     for (let i = 0; i < this.featuresLong.length; i++) {
       if (typeof this.featuresLong[i] == 'object') {
@@ -142,8 +145,8 @@ class VariableClass {
     }
 
     this.defaults = {
-      color: defaultColors[defaultColorCounter++ % 4],
-      latex: 'y=x'
+      name: loopingVaribaleNames(variableCounter)
+      value: 0
     };
 
     if (!overridingData) {
@@ -157,14 +160,6 @@ class VariableClass {
 
     this.applyDefaults();
     return this.desify();
-    
-      me.latex = opts.n + '=' + opts.v;
-      opts.hasOwnProperty('sb') ? me.slider = this.fillSlider(opts.sb) : null;
-    } else {
-      me = overridingData;
-    }
-
-    return me;
   }
 
   desify() {
@@ -184,6 +179,7 @@ class VariableClass {
     for (let key in data) {
       this[key] = data[key];
     }
+    this.latex = this.name + '=' + this.value; // Variable Specific
   }
 
   fillSlider(opts) {
@@ -251,6 +247,8 @@ class ColumnClass {
     this.opts = opts;
   }
   set(i) {
+    this.id = ++elementCounter;
+    
     var name = loopingVaribaleNames(i);
     return fillDefaults(this.opts, {
       c: defaultColors[i !== 1 ? defaultColorCounter++ % 4 : defaultColorCounter % 4],
