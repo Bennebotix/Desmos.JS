@@ -105,7 +105,7 @@ class PlainEQClass {
   }
 
   desify() {
-    return select(this, this.features.concat(this.featuresShort), v=>typeof v=='number'?v.toString():v);
+    return select(this, this.features.concat(this.featuresShort), v=>v);
   }
 
   initFeature(sn, longName, customReturn = false) {
