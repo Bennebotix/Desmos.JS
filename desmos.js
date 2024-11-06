@@ -211,7 +211,7 @@ class TableClass {
     this.features = ['type',
                      'id',
                      'columns'];
-    this.featuresLong = ['columns'];
+    this.featuresLong = ['columnsData'];
     this.featuresShort = ['col'];
 
     for (let i = 0; i < this.featuresLong.length; i++) {
