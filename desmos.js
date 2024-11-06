@@ -146,22 +146,35 @@ class VariableClass {
     return me;
   }
 
+  desify() {
+    return select(this, this.features.concat(this.featuresShort));
+  }
+
+  initFeature(sn, longName, customReturn = false) {
+    this[sn] = (v) => {
+      this[longName] = customReturn ? customReturn(v) : v;
+      this.applyDefaults();
+      return this.desify();
+    }
+  }
+
+  applyDefaults() {
+    var data = fillDefaults(this, this.defaults);
+    for (let key in data) {
+      this[key] = data[key];
+    }
+  }
+
   fillSlider(opts) {
     var slider = {};
 
-    if (opts.hasOwnProperty('min')) {
-      slider.min = opts.min;
-      slider.hardMin = true;
-    }
+    slider.min = opts.min;
+    slider.hardMin = opts.hasOwnProperty('min')?!0:undefined;
 
-    if (opts.hasOwnProperty('max')) {
-      slider.max = opts.max;
-      slider.hardMax = true;
-    }
+    slider.max = opts.max;
+    slider.hardMax = opts.hasOwnProperty('max')?!0:undefined;
 
-    if (opts.hasOwnProperty('step')) {
-      slider.step = opts.step;
-    }
+    slider.step = opts.step;
 
     return slider;
   }
