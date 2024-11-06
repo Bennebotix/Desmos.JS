@@ -87,7 +87,7 @@ class PlainEQClass {
     }
 
     this.defaults = {
-      color: defaultColors[defaultColorCounter++ % 4],
+      color: defaultColors[defaultColorCounter++ % defaultColors.length],
       latex: 'y=x'
     };
 
@@ -264,9 +264,9 @@ class ColumnClass {
   set(i) {
     this.id = ++elementCounter;
     
-    var name = loopingVaribaleNames(i);
+    var name = loopingVariableNames(i);
     return fillDefaults(this.opts, {
-      c: defaultColors[i !== 1 ? defaultColorCounter++ % 4 : defaultColorCounter % 4],
+      c: i !== 1 ? defaultColors[defaultColorCounter % defaultColors.length] : undefined,
       l: name.val + '_{' + name.excess + tableCounter + '}',
       h: i == 1 ? true : undefined,
       v: !this.opts.hasOwnProperty('l') ? undefined : undefined
