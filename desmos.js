@@ -198,22 +198,22 @@ class VariableClass {
   }
 
   fillSlider(opts) {
-    var slider = {};
-
-    if (opts.hasOwnProperty('min')) {
+    const slider = {};
+    
+    if ('min' in opts) {
       slider.min = opts.min;
       slider.hardMin = true;
     }
-
-    if (opts.hasOwnProperty('max')) {
+    
+    if ('max' in opts) {
       slider.max = opts.max;
       slider.hardMax = true;
     }
-
-    if (opts.hasOwnProperty('step')) {
+    
+    if ('step' in opts) {
       slider.step = opts.step;
     }
-
+    
     return slider;
   }
 }
