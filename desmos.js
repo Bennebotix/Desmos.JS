@@ -107,9 +107,9 @@ class PlainEQClass {
     return select(this, this.features.concat(this.featuresShort));
   }
 
-  initFeature(sn, longName, cutomReturn = false) {
+  initFeature(sn, longName, customReturn = false) {
     this[sn] = (v) => {
-      this[longName] = cutomReturn ? customReturn(v) : v;
+      this[longName] = customReturn ? customReturn(v) : v;
       this.applyDefaults();
       return this.desify();
     }
