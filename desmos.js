@@ -148,7 +148,7 @@ class VariableClass {
     var defaultName = loopingVaribaleNames(++variableCounter);
     
     this.defaults = {
-      name: defaultName.val + '_{' + defaultName + '}',
+      name: defaultName.val + '_{' + defaultName.excess + '}',
       value: 0
     };
 
@@ -170,7 +170,7 @@ class VariableClass {
   }
 
   initFeature(sn, longName, customReturn = false) {
-    this[sn] = (v) => {
+    this[sn] = v => {
       this[longName] = customReturn ? customReturn(v) : v;
       this.applyDefaults();
       return this.desify();
