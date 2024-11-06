@@ -5,7 +5,7 @@ var defaultColorCounter = 0;
 var defaultColors = ['#c74440', '#2d70b3', '#388c46', '#6042a6', '#000000'];
 var variableOrder = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 
-class Class{constructor(classIn){return(...a)=>new classIn(...a)}}
+class Class2Function{constructor(classIn){return(...a)=>new classIn(...a)}}
 
 class CalculatorClass {
   constructor(eqs = [], mode = 'e') {
@@ -105,13 +105,7 @@ class PlainEQClass {
   }
 
   desify() {
-    return select(this, this.features.concat(this.featuresShort), v => {
-      if (typeof v == 'number' || typeof v == 'boolean') {
-        return JSON.stringify(v);
-      } else {
-        return v
-      }
-    });
+    return select(this, this.features.concat(this.featuresShort));
   }
 
   initFeature(sn, longName, customReturn = false) {
@@ -172,13 +166,7 @@ class VariableClass {
   }
 
   desify() {
-    return select(this, this.features.concat(this.featuresShort), v => {
-      if (typeof v == 'number' || typeof v == 'boolean') {
-        return JSON.stringify(v);
-      } else {
-        return v
-      }
-    });
+    return select(this, this.features.concat(this.featuresShort));
   }
 
   initFeature(sn, longName, customReturn = false) {
@@ -219,64 +207,146 @@ class VariableClass {
 }
 
 class TableClass {
-  constructor(opts = {}, overridingData = false) {
-    var me = {};
+  constructor(overridingData = false) {
+    this.features = ['type',
+                     'id',
+                     'columns'];
+    this.featuresLong = ['columns'];
+    this.featuresShort = ['col'];
 
-    var defaults = {
-      c: [
+    for (let i = 0; i < this.featuresLong.length; i++) {
+      if (typeof this.featuresLong[i] == 'object') {
+        this.initFeature(this.featuresShort[i], this.featuresLong[i][0], this.featuresLong[i][1]);
+      } else {
+        this.initFeature(this.featuresShort[i], this.featuresLong[i]);
+      }
+    }
+
+    this.defaults = {
+      columnsData: [
         new ColumnClass({ n: 'x_{' + tableCounter + '}' }),
         new ColumnClass({ n: 'y_{' + tableCounter + '}' })
       ]
     };
-    opts = fillDefaults(opts, defaults);
 
     if (!overridingData) {
-      me.type = "table";
-      me.id = ++elementCounter;
-
-      me.columns = [];
-
-      for (var i = 0; i < opts.c.length; i++) {
-        var columnOld = opts.c[i].set(i + 1);
-        var columnNew = {};
-        columnNew.latex = columnOld.l;
-        columnNew.color = columnOld.c;
-        columnOld.hasOwnProperty('h') ? columnNew.hidden = columnOld.h : null;
-        columnOld.hasOwnProperty('ls') ? columnNew.lineStyle = columnOld.ls : null;
-        columnOld.hasOwnProperty('lw') ? columnNew.lineWidth = columnOld.lw : null;
-        columnOld.hasOwnProperty('lo') ? columnNew.lineOpacity = columnOld.lo : null;
-        columnOld.hasOwnProperty('hp') ? columnNew.points = columnOld.hp : null;
-        columnOld.hasOwnProperty('hl') ? columnNew.lines = columnOld.hl : null;
-        columnOld.hasOwnProperty('ps') ? columnNew.pointStyle = columnOld.ps : null;
-        columnOld.hasOwnProperty('pS') ? columnNew.pointSize = columnOld.pS : null;
-        columnOld.hasOwnProperty('po') ? columnNew.pointOpacity = columnOld.po : null;
-        columnOld.hasOwnProperty('dm') ? columnNew.dragMode = columnOld.dm : null;
-        columnOld.hasOwnProperty('v') ? columnNew.values = columnOld.v : null;
-
-        me.columns.push(columnNew);
-      }
+      this.type = "table";
+      this.id = ++elementCounter;
     } else {
-      me = overridingData;
+      for (let key in overridingData) {
+        this[key] = overridingData[key];
+      }
     }
 
-    return me;
+    this.applyDefaults();
+    return this.desify();
   }
+
+  desify() {
+    return select(this, this.features.concat(this.featuresShort));
+  }
+
+  initFeature(sn, longName, customReturn = false) {
+    this[sn] = (v) => {
+      this[longName] = customReturn ? customReturn(v) : v;
+      this.applyDefaults();
+      return this.desify();
+    }
+  }
+
+  applyDefaults() {
+    var data = fillDefaults(this, this.defaults);
+    for (let key of Object.keys(data)) {
+      this[key] = data[key];
+    }
+
+    this.columns = this.columnsData.map((col, i) => col.set(i));
+  } 
 }
 
 class ColumnClass {
-  constructor(opts = {}) {
-    this.opts = opts;
+  constructor(v = []) {
+    this.features = ['id',
+                     'latex',
+                     'color',
+                     'hidden',
+                     'points',
+                     'lines',
+                     'lineStyle',
+                     'lineWidth',
+                     'lineOpacity',
+                     'pointStyle',
+                     'pointSize',
+                     'pointOpacity',
+                     'dragMode',
+                     'values'];
+    this.featuresLong = ['latex',
+                         'color',
+                         'hidden',
+                         'points',
+                         'lines',
+                         'lineStyle',
+                         'lineWidth',
+                         'lineOpacity',
+                         'pointStyle',
+                         'pointSize',
+                         'pointOpacity',
+                         'dragMode'];
+    this.featuresShort = ['l', 'c', 'h', 'sp', 'sl', 'ls', 'lw', 'lo', 'ps', 'pS', 'po', 'dm'];
+
+    this.values = v.length ? v : undefined;
+
+    for (let i = 0; i < this.featuresLong.length; i++) {
+      if (typeof this.featuresLong[i] == 'object') {
+        this.initFeature(this.featuresShort[i], this.featuresLong[i][0], this.featuresLong[i][1]);
+      } else {
+        this.initFeature(this.featuresShort[i], this.featuresLong[i]);
+      }
+    }
+
+    this.defaults = {
+      color: i !== 1 ? defaultColors[defaultColorCounter % defaultColors.length] : undefined,
+      hidden: i == 1 ? true : undefined
+    };
+
+    if (!overridingData) {
+      this.type = "table";
+      this.id = ++elementCounter;
+    } else {
+      for (let key in overridingData) {
+        this[key] = overridingData[key];
+      }
+    }
+
+    this.applyDefaults();
+    return this.desify();
   }
+
+  desify() {
+    return select(this, this.features.concat(this.featuresShort));
+  }
+
+  initFeature(sn, longName, customReturn = false) {
+    this[sn] = (v) => {
+      this[longName] = customReturn ? customReturn(v) : v;
+      this.applyDefaults();
+      return this.desify();
+    }
+  }
+
+  applyDefaults(data = false) {
+    data = data || fillDefaults(this, this.defaults);
+    for (let key of Object.keys(data)) {
+      this[key] = data[key];
+    }
+  }
+
   set(i) {
-    this.id = ++elementCounter;
-    
     var name = loopingVariableNames(i);
-    return fillDefaults(this.opts, {
-      c: i !== 1 ? defaultColors[defaultColorCounter % defaultColors.length] : undefined,
-      l: name.val + '_{' + name.excess + tableCounter + '}',
-      h: i == 1 ? true : undefined,
-      v: !this.opts.hasOwnProperty('l') ? undefined : undefined
-    });
+    var latexDefaults = {
+      latex: name.val + '_{' + name.excess + tableCounter + '}'
+    }
+    this.applyDefaults(latexDefaults);
   }
 }
 
@@ -298,11 +368,11 @@ function select(a, b, f = false) {
   return c;
 }
 
-const Calculator = new Class(CalculatorClass);
-const PlainEQ = new Class(PlainEQClass);
-const Variable = new Class(VariableClass);
-const Table = new Class(TableClass);
-const Column = new Class(ColumnClass);
+const Calculator = new Class2Function(CalculatorClass);
+const PlainEQ = new Class2Function(PlainEQClass);
+const Variable = new Class2Function(VariableClass);
+const Table = new Class2Function(TableClass);
+const Column = new Class2Function(ColumnClass);
 
 const UID = l=>[...Array(l)].map(()=>Math.floor(Math.random()*16).toString(16)).join('');
 
