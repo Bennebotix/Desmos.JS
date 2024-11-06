@@ -99,15 +99,19 @@ class PlainEQClass {
       }
     }
 
-    applyDefaults();
-    return select(this, this.features);
+    this.applyDefaults();
+    return this.desify();
+  }
+
+  desify() {
+    return select(this, this.features.concat(this.featuresShort));
   }
 
   initFeature(sn, longName, cutomReturn = false) {
     this[sn] = (v) => {
       this[longName] = cutomReturn ? customReturn(v) : v;
-      applyDefaults();
-      return select(this, this.features);
+      this.applyDefaults();
+      return this.desify();
     }
   }
 
