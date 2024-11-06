@@ -230,10 +230,10 @@ class ColumnClass {
 function fillDefaults(a, b) {
   var c = {};
   for (let key in b) {
-    c[key] = (a.hasOwnProperty(key) ? a : b)[key];
+    c[key] = a[key]||b[key];
   }
   for (let key in a) {
-    !c.hasOwnProperty(key) ? c[key] = a[key] : null;
+    c[key] = c[key]||a[key];
   }
   return c;
 }
@@ -252,7 +252,7 @@ const Variable = new Class(VariableClass);
 const Table = new Class(TableClass);
 const Column = new Class(ColumnClass);
 
-const UID = (l) => [...Array(l)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
+const UID = l=>[...Array(l)].map(()=>Math.floor(Math.random()*16).toString(16)).join('');
 
 function loopingVaribaleNames(num) {
   const characters = [
