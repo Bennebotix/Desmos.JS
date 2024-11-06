@@ -308,15 +308,8 @@ class ColumnClass {
       color: i !== 1 ? defaultColors[defaultColorCounter % defaultColors.length] : undefined,
       hidden: i == 1 ? true : undefined
     });
-
-    if (!overridingData) {
-      this.type = "table";
-      this.id = ++elementCounter;
-    } else {
-      for (let key in overridingData) {
-        this[key] = overridingData[key];
-      }
-    }
+    
+    this.id = ++elementCounter;
 
     // this.applyDefaults(); // Column Specific
     return this.desify();
