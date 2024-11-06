@@ -334,8 +334,7 @@ class ColumnClass {
     }
   }
 
-  applyDefaults(data = false) {
-    data = data || fillDefaults(this, this.defaults);
+  applyDefaults(data) {
     for (let key of Object.keys(data)) {
       this[key] = data[key];
     }
