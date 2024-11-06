@@ -105,7 +105,7 @@ class PlainEQClass {
   }
 
   desify() {
-    return select(this, this.features.concat(this.featuresShort));
+    return select(this, this.features.concat(this.featuresShort), v=>v.toString());
   }
 
   initFeature(sn, longName, customReturn = false) {
@@ -166,7 +166,7 @@ class VariableClass {
   }
 
   desify() {
-    return select(this, this.features.concat(this.featuresShort));
+    return select(this, this.features.concat(this.featuresShort), v=>v.toString());
   }
 
   initFeature(sn, longName, customReturn = false) {
@@ -272,10 +272,10 @@ function fillDefaults(a, b) {
   }
   return c;
 }
-function select(a, b) {
+function select(a, b, f = false) {
   var c = {};
   for (let key of b) {
-    c[key] = a[key];
+    c[key] = f ? f(a[key]) : a[key];
   }
   return c;
 }
