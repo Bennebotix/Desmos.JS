@@ -69,7 +69,7 @@ class PlainEQClass {
                          'lineWidth',
                          'lineOpacity',
                          ['description', v => {
-                           this.clickableInfo = fillDefaults(this.clickableInfo, { "enabled": true });
+                           this.clickableInfo = fillDefaults(this.clickableInfo || {}, { "enabled": true });
                            return v;
                          }],
                          ['clickableInfo', v =>
