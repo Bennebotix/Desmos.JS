@@ -22,7 +22,7 @@ class CalculatorClass {
     this.json = new JSONStateCrafter(eqs);
 
     if (eqs.length) {
-      //alert(JSON.stringify(this.json, 1, 2));
+      alert(JSON.stringify(this.json, 1, 2));
       calculator.setState(this.json);
     } else {
       calc.setBlank();
