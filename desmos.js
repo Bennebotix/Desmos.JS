@@ -243,14 +243,13 @@ class ColumnClass {
 function fillDefaults(a, b) {
   var c = {};
   for (let key in b) {
-    c[key] = a[key]||b[key];
+    c[key] = (a.hasOwnProperty(key) ? a : b)[key];
   }
   for (let key in a) {
-    c[key] = c[key]||a[key];
+    !c.hasOwnProperty(key) ? c[key] = a[key] : null;
   }
   return c;
 }
-
 function select(a, b) {
   var c = {};
   for (let key of b) {
