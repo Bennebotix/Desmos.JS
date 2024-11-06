@@ -131,7 +131,7 @@ class VariableClass {
                      'latex',
                      'slider'];
     this.featuresLong = ['name',
-                         'value'
+                         'value',
                          ['slider', v =>
                            this.fillSlider(v)
                          ]];
@@ -140,7 +140,6 @@ class VariableClass {
     for (let i = 0; i < this.featuresLong.length; i++) {
       if (typeof this.featuresLong[i] == 'object') {
         this.initFeature(this.featuresShort[i], this.featuresLong[i][0], this.featuresLong[i][1]);
-        console.log(JSON.stringify(this.featuresLong[i][1]));
       } else {
         this.initFeature(this.featuresShort[i], this.featuresLong[i]);
       }
