@@ -166,7 +166,7 @@ class VariableClass {
   }
 
   desify() {
-    return select(this, this.features.concat(this.featuresShort), v=>v.toString());
+    return select(this, this.features.concat(this.featuresShort), v=>typeof v=='number'?v.toString():v);
   }
 
   initFeature(sn, longName, customReturn = false) {
