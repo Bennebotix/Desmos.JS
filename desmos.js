@@ -86,7 +86,7 @@ class PlainEQClass {
     }
 
     this.defaults = {
-      color: opts.grahpedEQ !== false ? defaultColors[defaultColorCounter++ % 4] : undefined,
+      color: defaultColors[defaultColorCounter++ % 4],
       latex: 'y=x'
     };
 
