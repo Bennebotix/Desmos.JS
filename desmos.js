@@ -224,8 +224,8 @@ class TableClass {
 
     this.defaults = {
       columnsData: [
-        new ColumnClass({ n: 'x_{' + tableCounter + '}' }),
-        new ColumnClass({ n: 'y_{' + tableCounter + '}' })
+        new ColumnClass().l('x_{' + tableCounter + '}' ),
+        new ColumnClass().l('y_{' + tableCounter + '}' )
       ]
     };
 
