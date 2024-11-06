@@ -144,8 +144,10 @@ class VariableClass {
       }
     }
 
+    var defaultName = loopingVaribaleNames(variableCounter);
+    
     this.defaults = {
-      name: loopingVaribaleNames(variableCounter)
+      name: defaultName.val + '_{' + defaultName + '}',
       value: 0
     };
 
