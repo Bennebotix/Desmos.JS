@@ -1,5 +1,6 @@
 var elementCounter = 0;
 var tableCounter = 1;
+var variableCounter = 0;
 var defaultColorCounter = 0;
 var defaultColors = ['#c74440', '#2d70b3', '#388c46', '#6042a6', '#000000'];
 var variableOrder = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
@@ -144,7 +145,7 @@ class VariableClass {
       }
     }
 
-    var defaultName = loopingVaribaleNames(variableCounter);
+    var defaultName = loopingVaribaleNames(++variableCounter);
     
     this.defaults = {
       name: defaultName.val + '_{' + defaultName + '}',
