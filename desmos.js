@@ -23,7 +23,7 @@ class CalculatorClass {
 
     if (eqs.length) {
       alert(JSON.stringify(this.json, 1, 2));
-      //calculator.setState(this.json);
+      calculator.setState(this.json);
     } else {
       calc.setBlank();
     }
@@ -105,7 +105,7 @@ class PlainEQClass {
   }
 
   desify() {
-    return select(this, this.features.concat(this.featuresShort), v=>v.toString());
+    return select(this, this.features.concat(this.featuresShort), v=>typeof v=='number'?v.toString():v);
   }
 
   initFeature(sn, longName, customReturn = false) {
