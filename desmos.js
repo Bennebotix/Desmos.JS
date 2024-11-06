@@ -1,9 +1,9 @@
-var elementCounter = 0;
-var tableCounter = 1;
-var variableCounter = 0;
-var defaultColorCounter = 0;
-var defaultColors = ['#c74440', '#2d70b3', '#388c46', '#6042a6', '#000000'];
-var variableOrder = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+let elementCounter = 0;
+let tableCounter = 1;
+let variableCounter = 0;
+let defaultColorCounter = 0;
+let defaultColors = ['#c74440', '#2d70b3', '#388c46', '#6042a6', '#000000'];
+let variableOrder = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 
 class Class2Function{constructor(classIn){return(...a)=>new classIn(...a)}}
 
@@ -14,10 +14,10 @@ class CalculatorClass {
     const preview = {actions: !0, expressions: !1, settingsMenu: !1};
     const editor = {actions: !0};
 
-    var calcElmnt = document.createElement('div');
+    let calcElmnt = document.createElement('div');
     document.body.appendChild(calcElmnt);
 
-    var calculator = Desmos.GraphingCalculator(calcElmnt, mode == 'e' ? editor : preview);
+    let calculator = Desmos.GraphingCalculator(calcElmnt, mode == 'e' ? editor : preview);
 
     this.json = new JSONStateCrafter(eqs);
 
@@ -117,7 +117,7 @@ class PlainEQClass {
   }
 
   applyDefaults() {
-    var data = fillDefaults(this, this.defaults);
+    let data = fillDefaults(this, this.defaults);
     for (let key in data) {
       this[key] = data[key];
     }
@@ -145,7 +145,7 @@ class VariableClass {
       }
     }
 
-    var defaultName = loopingVaribaleNames(++variableCounter);
+    let defaultName = loopingVariableNames(++variableCounter);
     
     this.defaults = {
       name: defaultName.val + '_{' + defaultName.excess + '}',
@@ -178,7 +178,7 @@ class VariableClass {
   }
 
   applyDefaults() {
-    var data = fillDefaults(this, this.defaults);
+    let data = fillDefaults(this, this.defaults);
     for (let key in data) {
       this[key] = data[key];
     }
@@ -255,7 +255,7 @@ class TableClass {
   }
 
   applyDefaults() {
-    var data = fillDefaults(this, this.defaults);
+    let data = fillDefaults(this, this.defaults);
     for (let key of Object.keys(data)) {
       this[key] = data[key];
     }
@@ -304,10 +304,10 @@ class ColumnClass {
       }
     }
 
-    this.defaults = {
+    this.defaults = i => {
       color: i !== 1 ? defaultColors[defaultColorCounter % defaultColors.length] : undefined,
       hidden: i == 1 ? true : undefined
-    };
+    }
 
     if (!overridingData) {
       this.type = "table";
@@ -318,7 +318,7 @@ class ColumnClass {
       }
     }
 
-    this.applyDefaults();
+    // this.applyDefaults(); // Column Specific
     return this.desify();
   }
 
@@ -329,7 +329,7 @@ class ColumnClass {
   initFeature(sn, longName, customReturn = false) {
     this[sn] = (v) => {
       this[longName] = customReturn ? customReturn(v) : v;
-      this.applyDefaults();
+      // this.applyDefaults(); // Column Specific
       return this.desify();
     }
   }
@@ -342,16 +342,16 @@ class ColumnClass {
   }
 
   set(i) {
-    var name = loopingVariableNames(i);
-    var latexDefaults = {
+    let name = loopingVariableNames(i);
+    let latexDefaults = {
       latex: name.val + '_{' + name.excess + tableCounter + '}'
     }
-    this.applyDefaults(latexDefaults);
+    this.applyDefaults(fillDefaults(this.defaults(i), latexDefaults));
   }
 }
 
 function fillDefaults(a, b) {
-  var c = {};
+  let c = {};
   for (let key of Object.keys(b)) {
     c[key] = (a.hasOwnProperty(key) ? a : b)[key];
   }
@@ -361,7 +361,7 @@ function fillDefaults(a, b) {
   return c;
 }
 function select(a, b, f = false) {
-  var c = {};
+  let c = {};
   for (let key of b) {
     c[key] = f ? f(a[key]) : a[key];
   }
